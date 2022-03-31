@@ -1,0 +1,30 @@
+{% extends 'e_learn/home.html' %}
+{% load static %}
+{% block content %}
+<div class="d-flex justify-content-center my-5">
+    <div class="card" style="width: 22rem;">
+        <img class="card-img-top" src="{% static '/dist/img/login_2.png' %}" alt="Card image cap">
+        <div class="card-body">
+            <h2 class="mt-2 mb-3 text-center">Login</h2>
+            {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class='alert alert-warning'>{{error}}</p>
+            {% endfor %}
+            {% endif %}
+            <form action="" method="POST" novalidate>
+                {% csrf_token %}
+                {% for fm in form %}
+                    {{fm.label_tag}}
+                    {{fm}}
+                    <small class='text-danger'>{{fm.errors|striptags}}</small>
+                    <br>
+                {% endfor %}
+                <button type='submit' class="btn btn-primary btn-lg btn-block mb-2">Login</button>
+            </form>
+            <a href="{% url 'password_reset' %}" class='text-secondary text-bold'>Forget Password?</a>
+            <hr>
+            <p>Don't have an account? <a href="{% url 'register_student' %}" class='text-primary text-bold'>Register as Learner</a></p>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,52 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Quizzes{% endblock title %}
+
+{% block card_header %}
+    <div class="card-header">
+        <i class="fas fa-table text-primary"></i>
+        Manage quizzes
+        <a href="{% url 'quiz_add' %}" class='btn btn-success float-right' >Add Quiz</a>
+    </div>
+
+{% endblock card_header %}
+
+{% block content %}
+
+<div class="table-responsive">
+    <table id="quiztable" class="table table-bordered table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>S/N</th>
+                <th>Quiz</th>
+                <th>Subject</th>
+                <th>Questions</th>
+                <th>Taken</th>
+                <th>Result</th>
+                <th>View Quiz</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for quiz in quizzes %}
+            <tr class='clickable-row' data-href="{% url 'quiz_details' quiz.id %}">
+                <td>{{forloop.counter}}</td>
+                <td>{{quiz.title}}</td>
+                <td>{{quiz.course.title}}</td>
+                <td>{{quiz.get_quiz_questions_number}}</td>
+                <td>99</td>
+                <td><a class="btn btn-primary btn-sm" href="/finance/receipt/create?invoice=563">View Result</a></td>
+                <td><a class="btn btn-primary btn-sm" href="{% url 'quiz_details' quiz.id %}">View Quiz</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
+
+{% block morejs %}
+    <script>
+        $(document).ready(function(){
+            $('#quiztable').DataTable()
+        });
+    </script>
+{% endblock morejs %}

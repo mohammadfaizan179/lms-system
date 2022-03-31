@@ -1,0 +1,51 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Tutorials{% endblock title %}
+{% block breadcrumb %}{% endblock breadcrumb %}
+{% block card_header %}
+    <div class="card-header">
+        <div>
+            <i class="fas fa-table text-primary"></i>
+            List of Tutorials
+            {% if request.user.is_instructor %}
+                <a href="{% url 'tutorial_add' %}" class="btn btn-success float-sm-right">Add</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for tut in tutorials %}
+                <tr> 
+                    <td>{{forloop.counter}}</td>
+                    <td>{{tut.title}}</td>
+                    <td>{{tut.content}}</td>
+                    <td> 
+                        <a href="{% url 'tutorial_details' tut.id %}" class="btn btn-primary btn-sm">View</a>
+                    </td>
+                </tr>     
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
+
+{% block morejs %}
+<script>
+    $(document).ready(function(){
+        $('#dataTable').DataTable()
+    })
+</script>
+{% endblock morejs %}
+

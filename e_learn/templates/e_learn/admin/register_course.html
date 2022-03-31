@@ -1,0 +1,28 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Register Course{% endblock title %}
+
+{% block card_header %}
+    <div class="card-header">
+        <i class="fas fa-table text-primary"></i>
+        Please Add New Course
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+    <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {% for fm in form %}
+            {{fm.label_tag}}
+            {{fm}}
+            <small class='text-danger'>{{fm.errors|striptags}}</small> 
+            <br>
+        {% endfor %}
+        <button type=submit class='btn btn-success'>Add Course</button>
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class='alert alert-danger' role='alert'>{{error}}</p>
+            {% endfor %}
+        {% endif %}
+    </form>
+{% endblock content %}

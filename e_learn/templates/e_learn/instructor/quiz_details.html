@@ -1,0 +1,35 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Quizzes{% endblock title %}
+
+{% block card_header %}
+    <div class="card-header">
+        <i class="fas fa-table text-primary"></i>
+        Quiz Details
+        <a href="{% url 'quiz_questions' quiz_id %}" class='btn btn-success btn-sm float-right'>Add question</a>       
+    </div>
+
+{% endblock card_header %}
+
+{% block content %}
+<div>
+<ol>
+    {% for question in questions %}
+    <li>
+        <a href="{% url 'quiz_questions_update' question.id %}" class='text-bold'>{{question.question_text}}</a>
+        <ul>
+            {% for answer in answers_list %}
+            {% for ans in answer %}
+                {% if ans.question == question %}
+                    <li>
+                        <p {% if ans.is_correct %} style="color:green" {% endif %} >{{ans.text}}</p>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+</ol>
+</div>
+{% endblock content %}

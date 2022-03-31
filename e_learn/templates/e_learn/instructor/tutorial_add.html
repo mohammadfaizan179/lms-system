@@ -1,0 +1,36 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Tutorials{% endblock title %}
+{% block breadcrumb %}{% endblock breadcrumb %}
+{% block card_header %}
+    <div class="card-header">
+        <div>
+            <i class="fas fa-table text-primary"></i>
+             {% if action == 'update' %}Update {% else %} Add {% endif %} Tutorial
+            <a href="{% url 'tutorial_list' %}" class="btn btn-primary float-sm-right">Back</a>
+        </div>
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+    <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {% for fm in form %}
+            {{fm.label_tag}}
+            {{fm}}
+            <small class='text-danger'>{{fm.errors|striptags}}</small>
+            <br>
+        {% endfor %}
+        {% if action == 'update' %}
+            <button type='submit' class='btn btn-success'>Update</button>
+        {% else %}
+            <button type='submit' class='btn btn-success'>Add</button>
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class='alert alert-danger'>{{error}}</p>
+            {% endfor %}
+        {% endif %}
+    </form>
+{% endblock content %}

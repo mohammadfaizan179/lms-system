@@ -1,0 +1,31 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}
+    <h1>Update Courses</h1>
+{% endblock title %}
+
+{% block card_header %}
+<div class='card-header'>
+    <i class="fas fa-table text-primary"></i>
+    <span>Update your courses</span>
+</div>
+{% endblock card_header %}
+
+{% block content %}
+    <form action="" method='POST'>
+        {% csrf_token %}
+        {% for fm in form %}
+            {{fm.label_tag}}
+            {{fm}}
+            <small class='text-danger'>{{fm.errors|striptags}}</small>
+        {% endfor %}
+        <br>
+        <button type='submit' class='btn btn-primary'>Update</button>
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <p class='alert alert-warning'>{{error}}</p>
+        {% endfor %}
+        {% endif %}
+    </form>
+
+{% endblock content %}

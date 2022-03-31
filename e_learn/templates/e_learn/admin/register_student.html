@@ -1,0 +1,34 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Register Student{% endblock title %}
+
+{% block card_header %}
+    <div class="card-header">
+        <i class="fas fa-table text-primary"></i>
+        Please Add New Student
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+    <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        <div class='form-group'>
+            {% for uf in user_form %}
+                {{uf.label_tag}}
+                {{uf}}
+                <small class='text-danger'>{{uf.errors|striptags}}</small>
+                <br>
+            {% endfor %}
+        </div>
+        <div class='form-group'>
+            {% for sf in student_form %}
+                {{sf.label_tag}}
+                {{sf}}
+                <small class='text-danger'>{{sf.errors|striptags}}</small>
+            {% endfor %}
+        </div>
+        <br>
+        <button type='submit' class="btn btn-success">Register</button>
+    </form>
+{% endblock content %}
+

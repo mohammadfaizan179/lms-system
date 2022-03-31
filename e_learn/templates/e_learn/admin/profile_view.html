@@ -1,0 +1,74 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Profile{% endblock title %}
+{% block breadcrumb %}{% endblock breadcrumb %}
+{% block card_header %}
+    <div class="card-header">
+        <div>
+            <i class="fas fa-table text-primary"></i>
+            Your Profile Information
+        </div>
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+    <div class='row' style="min-height: 22rem">
+        <div class='col-sm-4 mt-3 pl-5'>
+            <img src="{{user.get_image}}" alt="image" class='rounded img-fluid'>
+        </div>
+        <div class='col-sm-8 mt-3'>
+            <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <td>First Name</td>
+                    <td><span class='text-muted'>{{user.first_name|default:'N/A'}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>Last Name</td>
+                    <td><span class='text-muted'>{{user.last_name|default:'N/A'}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>Mobile</td>
+                    <td><span class='text-muted'>{{user.mobile|default:'N/A'}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>Email</td>
+                    <td><span class='text-muted'>{{user.email|default:'N/A'}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>Date of Birth</td>
+                    <td><span class='text-muted'>{{user.dob|default:'N/A'}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>Address</td>
+                    <td><span class='text-muted'>{{user.address|default:'N/A'}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>City</td>
+                    <td><span class='text-muted'>{{user.city|default:'N/A'}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>State</td>
+                    <td><span class='text-muted'>{{user.province|default:'N/A'}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>Country</td>
+                    <td><span class='text-muted'>{{user.country|default:'N/A'}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>Campus</td>
+                    <td><span class='text-muted'>{{user.campus|default:'N/A'}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>Department</td>
+                    <td><span class='text-muted'>{{user.department|default:'N/A'}}</span></td>
+                  </tr>
+                  <tr>
+                    <td>Specialization</td>
+                    <td><span class='text-muted'>{{user.specialization|default:'N/A'}}</span></td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

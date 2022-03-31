@@ -1,0 +1,41 @@
+{% extends 'e_learn/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    <h1>Take Quiz</h1>
+{% endblock title %}
+
+{% block card_header %}
+<div class='card-header'>
+    <i class="fas fa-table text-primary"></i>
+    <span>Attempt question</span>
+</div>
+{% endblock card_header %}
+
+{% block content %}
+<div class="progress mb-3">
+    <div class="progress-bar" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }}%"></div>
+</div>
+
+<h4>Subject : {{subject}}</h4>
+<hr>
+
+<h5 class="mb-3 lead">{{ quiz.title }}</h5>
+<p>{{ question.question_text }}</p>
+
+{% if form %}
+    <form method="POST" novalidate>
+        {% csrf_token %}
+        {% comment %} {{ form|crispy }} {% endcomment %}
+
+        {% for fm in form %}
+        {{fm}}
+        {% endfor %}
+
+    <button type="submit" class="btn btn-primary">Next →</button>
+    </form>
+{% else %}
+    <p>Answers not available</p>
+{% endif %}
+
+{% endblock content %}

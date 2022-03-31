@@ -1,0 +1,52 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Update Question{% endblock title %}
+
+{% block card_header %}
+    <div class="card-header">
+        <i class="fas fa-table text-primary"></i>
+        Update Question
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+
+<form method="POST" novalidate>
+    {% csrf_token %}
+    <div class="row px-2">
+        <div class="col-sm-6">
+            <div class="form-group row items-group pr-4">
+                {{q_form.question_text.label_tag}}        
+                {{q_form.question_text}}        
+                <small class='text-danger'>{{q_form.errors|striptags}}</small>        
+                <br>
+            </div>
+        </div>
+        
+        <div class="col-sm-6 callout callout-info  px-2">
+            <h5 class="text-center mb-4">Update Answers</h5>
+            <div class="row px-3">
+                <div class="col-sm-5"><strong>Answer</strong></div>
+                <div class="col-sm-5 text-center"><strong>Is Correct</strong></div>
+                {% comment %} <div class="col-sm-2 text-center"><strong>Delete</strong></div> {% endcomment %}
+            </div>
+
+            {{ a_form.non_form_errors }}
+            {{ a_form.management_form }}
+            {% for form in a_form %}
+            <div class="row d-flex py-1 px-3 inline">
+                <div class='col-sm-5'>{{ form.text }}</div>
+                <div class='col-sm-5 text-center'>{{ form.is_correct }}</div>
+                {% comment %} <div class='col-sm-2 text-center'>
+                    {% if a_form.can_delete %}
+                        {{ form.DELETE }}
+                    {% endif %}
+                </div> {% endcomment %}
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+    <button type='submit' class='btn btn-success'>Update Question</button>
+</form>
+{% endblock content %}

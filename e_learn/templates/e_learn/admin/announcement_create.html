@@ -1,0 +1,35 @@
+{% extends 'e_learn/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Announcements{% endblock title %}
+{% block breadcrumb %}{% endblock breadcrumb %}
+{% block card_header %}
+    <div class="card-header">
+        <div>
+            <i class="fas fa-table text-primary"></i>
+            Post an Announcement
+            <a href="{% url 'announcement_list' %}" class="btn btn-primary float-sm-right">Back</a>
+        </div>
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+    <form action="" method='POST' novalidate>   
+        {% csrf_token %} 
+        <div class='form-group'>
+            {% for fm in form  %}
+                {{fm.label_tag}}
+                {{fm}}
+                <span class='text-danger'>{{fm.errors|striptags}}</span> 
+            {% endfor %}
+            <br>
+        </div>
+        <button type='submit' class='btn btn-success'>Post</button>
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+            <p class='alert alert-warning'>{{error}}</p>
+        {% endfor %}
+        {% endif %}
+    </form>
+{% endblock content %}
+

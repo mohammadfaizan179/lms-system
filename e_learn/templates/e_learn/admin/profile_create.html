@@ -1,0 +1,86 @@
+{% extends 'e_learn/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block more_style %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock more_style %}
+    
+
+{% block title %}Profile{% endblock title %}
+{% block breadcrumb %}{% endblock breadcrumb %}
+{% block card_header %}
+    <div class="card-header">
+        <div>
+            <i class="fas fa-table text-primary"></i>
+            Your Profile Information
+        </div>
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+    <form action="" method="POST" id="profile" load-departments="{% url 'load_departments' %}" load-specialization="{% url 'load_specialization' %}" novalidate enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="hidden" id='action' name='action' value='update'>
+        <hr>
+        <button type='submit' class='btn btn-primary'>
+            {% if request.user.profile %}
+                Update Profile
+            {% else %}
+                Create Profie
+            {% endif %}
+        </button>
+    </form>
+
+{% endblock content %}
+
+{% block morejs %}
+    <script>
+        $("#id_campus").change(function(){
+            let url = $("#profile").attr("load-departments");
+            let campusID = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url : url,
+                data : {
+                    "campusID" : campusID
+                },
+                success: function(data){
+                    $('#id_department').html(data);
+                }
+            })
+        });
+        
+        $("#id_department").change(function(){
+            let url = $("#profile").attr('load-specialization')
+            let dep_id = $(this).val();   
+            $.ajax({
+                type : "GET",
+                url : url,
+                data : {
+                    "dep_id" : dep_id 
+                }, 
+                success: function(data){
+                    let html_data = '<option value="" disabled=True>---------</option>';
+                    data.forEach(function(dep){
+                        html_data += `<option value="${dep.id}">${dep.name}</option>` 
+                    });
+                    $("#id_specialization").html(html_data);
+                }
+            });
+            
+        }); 
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $("#id_campus").select2({});
+        })
+    </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% endblock morejs %} 
+
+

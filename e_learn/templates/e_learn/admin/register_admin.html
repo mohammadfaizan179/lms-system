@@ -1,0 +1,26 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Register Admin{% endblock title %}
+
+{% block card_header %}
+    <div class="card-header">
+        <i class="fas fa-table text-primary"></i>
+        Please Add a New Admin User
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+    <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        <div class='form-group'>
+            {% for uf in user_form %}
+                {{uf.label_tag}}
+                {{uf}}
+                <small class='text-danger'>{{uf.errors|striptags}}</small>
+                <br>
+            {% endfor %}
+        </div>
+        <button type='submit' class="btn btn-success">Register</button>
+    </form>
+{% endblock content %}
+

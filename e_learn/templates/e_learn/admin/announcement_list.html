@@ -1,0 +1,60 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Announcements{% endblock title %}
+{% block breadcrumb %}{% endblock breadcrumb %}
+{% block card_header %}
+    <div class="card-header">
+        <div>
+            <i class="fas fa-table text-primary"></i>
+            List of Announcements
+            <a href="{% url 'announcement_create' %}" class="btn btn-success float-sm-right">Add</a>
+        </div>
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Anncouncement</th>
+            <th>Date-Author</th>
+            {% if request.user.is_admin or request.user.is_instructor %}
+                <th>Action</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+            {% for a in announcements %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{a.description}}</td>
+                    <td>{{a.user.email}} - {{a.created_on}}</td>
+                    
+                    {% if request.user.is_instructor %}
+                        <td> 
+                            <a href="{% url 'announcement_update' a.id %}" class="btn btn-warning btn-sm">Update</a>
+                        </td>
+                    {% endif %}
+                                
+                    {% if request.user.is_admin %}
+                        <td>
+                            <a href="{% url 'announcement_update' a.id %}" class="btn btn-warning btn-sm">Update</a>
+                            <a href="{% url 'announcement_delete' a.id %}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    {% endif %}
+                </tr>     
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
+
+{% block morejs %}
+<script>
+    $(document).ready(function(){
+        $('#dataTable').DataTable()
+    })
+</script>
+{% endblock morejs %}

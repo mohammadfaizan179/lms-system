@@ -1,0 +1,31 @@
+{% extends 'e_learn/base.html' %}
+{% load embed_video_tags %}
+
+{% block title %}Tutorial Detail{% endblock title %}
+{% block breadcrumb %}{% endblock breadcrumb %}
+{% block card_header %}
+    <div class="card-header">
+        <div>
+            <i class="fas fa-table text-primary"></i>
+            Tutorial Detail
+            {% if request.user.is_instructor %}
+                <a href="{% url 'tutorial_update' tutorial.id %}" class="btn btn-success float-sm-right mx-2">Update</a>
+                <a href="{% url 'tutorial_delete' tutorial.id %}" class="btn btn-danger float-sm-right mx-2">Delete</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+    <div class='row'>
+        <div class='col-sm-6'>
+            <h4>Subject : {{tutorial.course}}</h4>
+            <h5>Topic : {{tutorial.title}}</h5>
+            <p>Content</p>
+            <hp>{{tutorial.content}}</hp>
+        </div>
+        <div class='col-sm-6'>
+            {% video tutorial.video '400x300' %}
+        </div>
+    </div>
+{% endblock content %}

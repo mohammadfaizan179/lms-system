@@ -1,0 +1,44 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Dashboard{% endblock title %}
+{% block breadcrumb %}{% endblock breadcrumb %}
+{% block card_header %}{% endblock card_header %}
+
+{% block content %}
+    
+    <div class='row'  style=" min-height: 25rem;">
+        <div class='col-sm-3'>
+            <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                <div class="card-header">Total Number of Courses</div>
+                <div class="card-body">
+                  <h1 class="text-center">{{courses}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm-3'>
+            <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                <div class="card-header">Total Number of Learners</div>
+                <div class="card-body">
+                  <h1 class="text-center">{{students}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm-3'>
+            <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                <div class="card-header">Total Instructors</div>
+                <div class="card-body">
+                  <h1 class="text-center">{{instructors}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm-3'>
+            <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+                <div class="card-header">All Users</div>
+                <div class="card-body">
+                  <h1 class="text-center">{{users}}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,64 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}
+    <h1>Available Quiz</h1>
+{% endblock title %}
+
+{% block card_header %}
+<div class='card-header'>
+    <i class="fas fa-table text-primary"></i>
+    <span>List of available quizzes</span>
+</div>
+{% endblock card_header %}
+
+{% block content %}
+
+<h4>Subjects :</h4>
+<p class="text-muted">
+    Subjects:   
+    {% for subject in subjects %}
+      <span class="badge badge-primary" style="background-color: {{subject.color}}">{{subject}}</span> 
+    {% endfor %}
+    <a href="{% url 'course_update' %}"><small>(update interests)</small></a>
+</p>
+<div class="card">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="true" href="{% url 'active_quiz' %}">Active</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'taken_quiz'  %}">Taken</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+        <table class="table mb-0">
+            <thead>
+                <tr>
+                    <th>Quiz</th>
+                    <th>Subject</th>
+                    <th>Length</th>
+                    <th>Take Quiz</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz in quizzes %}
+                <tr>
+                    <td>{{quiz.title}}</td>
+                    <td><span class="badge badge-primary" style="background-color: {{quiz.course.color}}">{{quiz.course.title}}</span></td>
+                    <td>{{quiz.get_quiz_questions_number}}</td>
+                    <td>
+                      {% if quiz.is_quiz_taken %}
+                        <a href="{% url 'taken_quiz' %}" class='btn btn-primary btn-sm'>View Result</a>
+                        {% else %}
+                        <a href="{% url 'take_quiz' quiz.id %}" class='btn btn-primary btn-sm'>Take Quiz</a>
+                      {% endif %}
+                    </td>
+                </tr> 
+                {% endfor %}
+            </tbody>
+          </table>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,67 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Notes{% endblock title %}
+{% block breadcrumb %}{% endblock breadcrumb %}
+{% block card_header %}
+    <div class="card-header">
+        <div>
+            <i class="fas fa-table text-primary"></i>
+            List of Notes
+            {% if request.user.is_instructor %}
+            <a href="{% url 'notes_add' %}" class="btn btn-success float-sm-right">Add</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+            <th>No</th>
+            <th>Cover</th>
+            <th>Title</th>
+            <th>Read</th>
+            <th>Download</th>
+            {% if request.user.is_instructor %}
+                <th>Action</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+            {% for note in notes %}
+                <tr> 
+                    <td>{{forloop.counter}}</td>
+                    <td>
+                        {% if note.cover %}
+                            <img src="{{note.cover.url}}" alt="image" class='fluid img-circle' width="80px" height="80px">
+                        {% else %}
+                            <p>N/A</p> 
+                        {% endif %} 
+                    </td>
+                    <td>{{note.title}}</td>
+                    <td> {% if note.file %} <a href="{{note.file.url}}" class='btn btn-outline-primary'><i class="fab fa-readme"></i></a> {% else %} N/A {% endif %} </td>
+                    <td> {% if note.file %} <a href="{% url 'download_pdf_file' note.id %}" class='btn btn-outline-info'><i class="fas fa-download"></i></a>  {% else %} N/A {% endif %} </td>
+                    {% if request.user.is_instructor %}        
+                        <td>
+                            <a href="{% url 'notes_update' note.id %}" class='text-warning'><i class="fas fa-edit"></i></a>
+                            <a href="{% url 'notes_delete' note.id %}" class='text-danger'><i class="fas fa-trash"></i></a>
+                        </td>
+                    {% endif %}
+                </tr>     
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
+
+{% block morejs %}
+<script>
+    $(document).ready( function () {
+        $('#dataTable').DataTable();
+    } );
+</script>
+{% endblock morejs %}
+
+

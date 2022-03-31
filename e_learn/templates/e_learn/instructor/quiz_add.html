@@ -1,0 +1,26 @@
+{% extends 'e_learn/base.html' %}
+
+{% block title %}Add New Quizz{% endblock title %}
+
+{% block card_header %}
+    <div class="card-header">
+        <i class="fas fa-table text-primary"></i>
+        Add a New Quiz
+    </div>
+{% endblock card_header %}
+
+{% block content %}
+<form action="" method='POST' novalidate>
+    {% for fm in form %}
+        {% csrf_token %}
+        <div class='form-group'>
+            {{fm.label_tag}}        
+            {{fm}}        
+            <small class='text-danger'>{{fm.errors|striptags}}</small>        
+            <br>
+        </div>
+    {% endfor %}
+    <button type='submit' class='btn btn-success'>Add Quiz</button>
+</form>
+
+{% endblock content %}
